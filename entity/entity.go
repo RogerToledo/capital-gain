@@ -1,9 +1,9 @@
 package entity
 
 type Transaction struct {
-	Operation string
-	UnitCost  float64
-	Quantity  float64
+	Operation string  `json:"operation"`
+	UnitCost  float64 `json:"unit-cost"`
+	Quantity  float64 `json:"quantity"`
 }
 
 type Out struct {

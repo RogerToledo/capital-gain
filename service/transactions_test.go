@@ -9,153 +9,359 @@ import (
 func TestProcessTransactions(t *testing.T) {
 	cases := []struct {
 		name     string
-		input    []entity.Transaction
-		input1   []entity.Transaction
+		input    [][]entity.Transaction
 		expected string
 	}{
-		// {
-		// 	name: "Case 1",
-		// 	input: []entity.Transaction{
-		// 		{
-		// 			Operation: "buy",
-		// 			UnitCost:  10.00,
-		// 			Quantity:  100,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  15.00,
-		// 			Quantity:  50,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  15.00,
-		// 			Quantity:  50,
-		// 		},
-		// 	},
-		// 	expected: `[{"tax":0},{"tax":0},{"tax":0}]`,
-		// },
 		{
-			name: "Case 2",
-			input: []entity.Transaction{
+			name: "Case 1",
+			input: [][]entity.Transaction{
 				{
-					Operation: "buy",
-					UnitCost:  10.00,
-					Quantity:  10000,
-				},
-				{
-					Operation: "sell",
-					UnitCost:  20.00,
-					Quantity:  5000,
-				},
-				{
-					Operation: "sell",
-					UnitCost:  5.00,
-					Quantity:  5000,
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  100,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15.00,
+						Quantity:  50,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15.00,
+						Quantity:  50,
+					},
 				},
 			},
-			expected: `[{"tax":0},{"tax":10000},{"tax":0}]`,
+			expected: `[[{"tax":0},{"tax":0},{"tax":0}]]`,
 		},
-		//Must to do Case 1 + Case 2
-		// {
-		// 	name: "Case 3",
-		// 	input: []entity.Transaction{
-		// 		{
-		// 			Operation: "buy",
-		// 			UnitCost:  10.00,
-		// 			Quantity:  10000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  5.00,
-		// 			Quantity:  5000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  20.00,
-		// 			Quantity:  3000,
-		// 		},
-		// 	},
-		// 	expected: `[{"tax":0},{"tax":0},{"tax":1000}]`,
-		// },
-		// {
-		// 	name: "Case 4",
-		// 	input: []entity.Transaction{
-		// 		{
-		// 			Operation: "buy",
-		// 			UnitCost:  10.00,
-		// 			Quantity:  10000,
-		// 		},
-		// 		{
-		// 			Operation: "buy",
-		// 			UnitCost:  25.00,
-		// 			Quantity:  5000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  15.00,
-		// 			Quantity:  10000,
-		// 		},
-		// 	},
-		// 	expected: `[{"tax":0},{"tax":0},{"tax":0}]`,
-		// },
-		// {
-		// 	name: "Case 5",
-		// 	input: []entity.Transaction{
-		// 		{
-		// 			Operation: "buy",
-		// 			UnitCost:  10.00,
-		// 			Quantity:  10000,
-		// 		},
-		// 		{
-		// 			Operation: "buy",
-		// 			UnitCost:  25.00,
-		// 			Quantity:  5000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  15.00,
-		// 			Quantity:  10000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  25.00,
-		// 			Quantity:  5000,
-		// 		},
-		// 	},
-		// 	expected: `[{"tax":0},{"tax":0},{"tax":0},{"tax":10000}]`,
-		// },
-		// {
-		// 	name: "Case 6",
-		// 	input: []entity.Transaction{
-		// 		{
-		// 			Operation: "buy",
-		// 			UnitCost:  10.00,
-		// 			Quantity:  10000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  2.00,
-		// 			Quantity:  5000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  20.00,
-		// 			Quantity:  2000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  20.00,
-		// 			Quantity:  2000,
-		// 		},
-		// 		{
-		// 			Operation: "sell",
-		// 			UnitCost:  25.00,
-		// 			Quantity:  1000,
-		// 		},
-		// 	},
-		// 	expected: `[{"tax":0},{"tax":0},{"tax":0},{"tax":3000}]`,
-		// },
-
+		{
+			name: "Case 2",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  5.00,
+						Quantity:  5000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":10000},{"tax":0}]]`,
+		},
+		{
+			name: "Case 1 + 2",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  100,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15.00,
+						Quantity:  50,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15.00,
+						Quantity:  50,
+					},
+				},
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  5.00,
+						Quantity:  5000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":0},{"tax":0}],[{"tax":0},{"tax":10000},{"tax":0}]]`,
+		},
+		{
+			name: "Case 3",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  5.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20.00,
+						Quantity:  3000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":0},{"tax":1000}]]`,
+		},
+		{
+			name: "Case 4",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  25.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15.00,
+						Quantity:  10000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":0},{"tax":0}]]`,
+		},
+		{
+			name: "Case 5",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  25.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  25.00,
+						Quantity:  5000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":0},{"tax":0},{"tax":10000}]]`,
+		},
+		{
+			name: "Case 6",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  2.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20.00,
+						Quantity:  2000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20.00,
+						Quantity:  2000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  25.00,
+						Quantity:  1000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":0},{"tax":0},{"tax":0},{"tax":3000}]]`,
+		},
+		{
+			name: "Case 7",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  2.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20.00,
+						Quantity:  2000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20.00,
+						Quantity:  2000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  25.00,
+						Quantity:  1000,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  20.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15.00,
+						Quantity:  5000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  30.00,
+						Quantity:  4350,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  30.00,
+						Quantity:  650,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":0},{"tax":0},{"tax":0},{"tax":3000},{"tax":0},{"tax":0},{"tax":3700},{"tax":0}]]`,
+		},
+		{
+			name: "Case 8",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  50.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  20.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  50.00,
+						Quantity:  10000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":80000},{"tax":0},{"tax":60000}]]`,
+		},
+		{
+			name: "Case 8",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  10.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  50.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  20.00,
+						Quantity:  10000,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  50.00,
+						Quantity:  10000,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":80000},{"tax":0},{"tax":60000}]]`,
+		},
+		{
+			name: "Case 9",
+			input: [][]entity.Transaction{
+				{
+					{
+						Operation: "buy",
+						UnitCost:  5000.00,
+						Quantity:  10,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  4000.00,
+						Quantity:  5,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  15000.00,
+						Quantity:  5,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  4000.00,
+						Quantity:  2,
+					},
+					{
+						Operation: "buy",
+						UnitCost:  23000.00,
+						Quantity:  2,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  20000.00,
+						Quantity:  1,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  12000.00,
+						Quantity:  10,
+					},
+					{
+						Operation: "sell",
+						UnitCost:  15000.00,
+						Quantity:  3,
+					},
+				},
+			},
+			expected: `[[{"tax":0},{"tax":0},{"tax":0},{"tax":0},{"tax":0},{"tax":0},{"tax":1000},{"tax":2400}]]`,
+		},
 	}
 
 	for _, c := range cases {
@@ -216,8 +422,8 @@ func TestCalcWeightedAverage(t *testing.T) {
 	}
 
 	cases := []struct {
-		name string
-		input values
+		name     string
+		input    values
 		expected float64
 	}{
 		{
@@ -265,9 +471,9 @@ func TestCalcWeightedAverage(t *testing.T) {
 func TestCalculateTax(t *testing.T) {
 	type values struct {
 		currentWeightedAverage float64
-		profit                float64
-		newProfit             float64
-		in                   entity.Transaction
+		profit                 float64
+		newProfit              float64
+		in                     entity.Transaction
 	}
 
 	cases := []struct {
@@ -279,8 +485,8 @@ func TestCalculateTax(t *testing.T) {
 			name: "Case 1 - shouldn't pay tax when Operation is buy",
 			input: values{
 				currentWeightedAverage: 10.00,
-				profit:                0.00,
-				newProfit:             1000.00,
+				profit:                 0.00,
+				newProfit:              1000.00,
 				in: entity.Transaction{
 					Operation: "buy",
 					UnitCost:  20.00,
@@ -293,8 +499,8 @@ func TestCalculateTax(t *testing.T) {
 			name: "Case 2 - shouldn't pay tax when operationCost is equal to 20000",
 			input: values{
 				currentWeightedAverage: 10.00,
-				profit:                10.00,
-				newProfit:             1000.00,
+				profit:                 10.00,
+				newProfit:              1000.00,
 				in: entity.Transaction{
 					Operation: "sell",
 					UnitCost:  20.00,
@@ -307,8 +513,8 @@ func TestCalculateTax(t *testing.T) {
 			name: "Case 3 - shouldn't pay tax when operationCost is equal to 20000",
 			input: values{
 				currentWeightedAverage: 10.00,
-				profit:                10.00,
-				newProfit:             1000.00,
+				profit:                 10.00,
+				newProfit:              1000.00,
 				in: entity.Transaction{
 					Operation: "sell",
 					UnitCost:  20.00,
@@ -321,8 +527,8 @@ func TestCalculateTax(t *testing.T) {
 			name: "Case 3 - shouldn't pay tax when operationCost is less than 20000",
 			input: values{
 				currentWeightedAverage: 10.00,
-				profit:                30.00,
-				newProfit:             20.00,
+				profit:                 30.00,
+				newProfit:              20.00,
 				in: entity.Transaction{
 					Operation: "sell",
 					UnitCost:  15.00,
@@ -335,8 +541,8 @@ func TestCalculateTax(t *testing.T) {
 			name: "Case 4 - shouldn't pay tax when profit is equal to 0",
 			input: values{
 				currentWeightedAverage: 10.00,
-				profit:                -20.00,
-				newProfit:             20.00,
+				profit:                 -20.00,
+				newProfit:              20.00,
 				in: entity.Transaction{
 					Operation: "sell",
 					UnitCost:  15.00,
@@ -349,8 +555,8 @@ func TestCalculateTax(t *testing.T) {
 			name: "Case 5 - shouldn't pay tax when profit is less than 0",
 			input: values{
 				currentWeightedAverage: 10.00,
-				profit:                -50.00,
-				newProfit:             20.00,
+				profit:                 -50.00,
+				newProfit:              20.00,
 				in: entity.Transaction{
 					Operation: "sell",
 					UnitCost:  15.00,
@@ -363,15 +569,29 @@ func TestCalculateTax(t *testing.T) {
 			name: "Case 6 - should pay tax",
 			input: values{
 				currentWeightedAverage: 10.00,
-				profit:                50.00,
-				newProfit:             20.00,
+				profit:                 50.00,
+				newProfit:              20.00,
 				in: entity.Transaction{
 					Operation: "sell",
 					UnitCost:  15.00,
 					Quantity:  2000,
 				},
 			},
-			expected: 14.00,
+			expected: 4.00,
+		},
+		{
+			name: "Case 7 - should pay tax",
+			input: values{
+				currentWeightedAverage: 10.00,
+				profit:                 50.00,
+				newProfit:              20.20,
+				in: entity.Transaction{
+					Operation: "sell",
+					UnitCost:  15.00,
+					Quantity:  2000,
+				},
+			},
+			expected: 4.04,
 		},
 	}
 
